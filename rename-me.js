@@ -17,11 +17,13 @@ var allGuests = false,
 while( guests < 20 ) {
 // Put up decorations
     for( ; decorationsUp <= decorations; decorationsUp += 2 ) {
+        guests++;
         console.log(( decorations - decorationsUp ) + " decorations left, and " + ( guests - arrived ) + " on their way." );
     }
-    guests++;
 }
 
+allGuests = ( arrived === guests );
+decorated = ( decorationsUp === decorations );
 
 // If the guests are all here and we're done decorating,
 if( allGuests && decorated ) {
