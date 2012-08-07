@@ -5,7 +5,7 @@
 // Project 2
 // ............... Description ...............
 
-var allGuests = false,
+var allArrived = false,
     decorated = false,
     ready = false,
     guests = [
@@ -20,37 +20,68 @@ var allGuests = false,
 
     announceGuest = function( guest ) {
         console.log( guest + "just arrived." );
-        guestArrived( guest );
     },
 
     readyToParty = function( haveAllGuests, haveAllDecorations ) {
         if( haveAllGuests && haveAllDecorations ) {
-            return true;
+            console.log( "We're ready to party." );
+        }
+        else if( !haveAllGuests ) {
+            console.log( "Waiting for more guests." );
+        }
+        else {
+            console.log( "Still putting up decorations." );
         };
-        return false;
+        readyToParty = true;
+    },
+
+    putUpDecorations = function( numberOfDecorations ) {
+        while( numberOfDecorations != 0 ) {
+            numberOfDecorations--;
+            if(( numberOfDecorations % 3 ) === 0 ) {
+                console.log( "Put up some more balloons. " + numberOfDecorations );
+            }
+            else if(( numberOfDecorations % 3 ) === 1 ) {
+                console.log( "Hung more birthday party decorations. " + numberOfDecorations );
+            }
+            else {
+                console.log( "Kids broke something. " + ( --numberOfDecorations ));
+            };
+        };
+        decorated = true;
+    },
+
+    addToGuestList = function( numberOf, names ) {
+        var guestList = allGuests;
+        for( var i = 0; i <= numberOf; i++ ) {
+            guestList[ guestList.length + i ] = names[ i ];
+        };
+        return guestList;
+    },
+
+    checkList = function( name, list ) {
+        var nameList = list.split( ", " );
+        for( var i = 0; i <= nameList.length; i++ ) {
+            if( name === nameList[ i ]) {
+                return name + " was expected.";
+            }
+            else {
+                return name + " was not expected.";
+            };
+        };
+    },
+
+    var throwParty = function() {
+        var stringGuestList = "";
+        readyToParty( allArrived, decorated );
+        putUpDecorations( 10 );
+        for( var i = 0; i <= guests.length; i++ ) {
+            var whoArrived = guests[ i ].split( ", " );
+            for( var j = 0; j <= whoArrived.length; j++ ) {
+                console.log( checkList( whoArrived[ j ]));
+            };
+            announceGuest( guests[ i ]);
+            arrived = addToGuestList( guests[ i ], arrived );
+        };
+        
     }
-
-    
-    
-
-while( decorationsUp < decorations ) {
-    decorationsUp += 5;
-    console.log(( decorationsUp - decorations ) + " decorations left to put up." );
-};
-
-for( ; arrival <= guests; arrival++ ) {
-    console.log( guests[ arrival ] + " just showed up.");
-    arrived[ arrival ] = guests[ arrival ];
-};
-
-
-allGuests = ( arrived === guests );
-decorated = ( decorationsUp === decorations );
-
-// If the guests are all here and we're done decorating,
-if( allGuests && decorated ) {
-// Then we're ready for Mom and Jim to come back:
-	ready = !ready;
-	console.log( "The guests are here, and the decorations are done; someone should call Jim and tell him we're ready." );
-};
-
