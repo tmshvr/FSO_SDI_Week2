@@ -63,12 +63,14 @@ var allArrived = false,
         var nameList = list.split( ", " );
         for( var i = 0; i <= nameList.length; i++ ) {
             if( name === nameList[ i ]) {
-                return name + " was expected.";
+                console.log( name + " was expected." );
             }
             else {
-                return name + " was not expected.";
+                console.log( name + " was not expected." );
             };
+            nameList.push( name );
         };
+        return nameList;
     },
 
     var throwParty = function() {
@@ -78,10 +80,11 @@ var allArrived = false,
         for( var i = 0; i <= guests.length; i++ ) {
             var whoArrived = guests[ i ].split( ", " );
             for( var j = 0; j <= whoArrived.length; j++ ) {
-                console.log( checkList( whoArrived[ j ]));
+                console.log( checkList( whoArrived[ j ], stringGuestList));
             };
             announceGuest( guests[ i ]);
             arrived = addToGuestList( guests[ i ], arrived );
         };
-        
-    }
+    };
+
+throwParty();
