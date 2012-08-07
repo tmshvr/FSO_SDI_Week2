@@ -8,19 +8,24 @@
 var allGuests = false,
     decorated = false,
     ready = false,
-    guests = 20,
-    arrived = 0,
+    guests = [
+        "Mike, Nevada, and Johnny", "Bobbi, Sage, and Madi", "Haley", "Patrick and Colleen",
+        "Amanda, Logan, Karli, and Elizabeth", "Kelly and Tim", "Matt and Jesse", "Rose, Verna, Joe, and Josh",
+    arrived = [ ],
+    arrival = 0,
     decorations = 40,
     decorationsUp = 0;
 
-// While we're still waiting for guests to arrive,
-while( guests < 20 ) {
-// Put up decorations
-    for( ; decorationsUp <= decorations; decorationsUp += 2 ) {
-        guests++;
-        console.log(( decorations - decorationsUp ) + " decorations left, and " + ( guests - arrived ) + " on their way." );
-    }
+while( decorationsUp < decorations ) {
+    decorationsUp += 5;
+    console.log(( decorationsUp - decorations ) + " decorations left to put up." );
 }
+
+for( ; arrival <= guests; arrival++ ) {
+    console.log( guests[ arrival ] + " just showed up.");
+    arrived[ arrival ] = guests[ arrival ];
+}
+
 
 allGuests = ( arrived === guests );
 decorated = ( decorationsUp === decorations );
