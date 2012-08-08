@@ -5,47 +5,35 @@
 // Project 2
 // ............... Description ...............
 
-var guestList = [ "Mike", "Nevada", "Johnny", "Bobbi", "Sage", "Madi", "Haley", "Patrick", "Colleen",
-        "Amanda", "Logan", "Karli", "Elizabeth", "Kelly", "Tim", "Matt", "Jesse", "Rose", "Verna", "Joe", "Josh"
+var guestList = [ "Mike, Nevada, Johnny", "Bobbi, Sage, Madi", "Haley", "Patrick, Colleen",
+        "Amanda, Logan, Karli, Elizabeth", "Kelly, Tim", "Matt, Jesse", "Rose, Verna, Joe, Josh"
     ],
-    allGuests = [ ],
-    numberOfDecorations = 0,
-    ready = false,
-    whoArrived = "";
-    
+    numberOfDecorations = 0;
 
 function ThrowParty() {
     Announce( "We're throwing a surprise party for Mom." );
-    numberOfDecorations = Decorate( 40 );
-    allGuests = GuestsArrive( guestList.length, guestList );
-    ready = readyToParty( allGuests.length, guestList.length );
-    Announce( areWeReadyYet( ));
+    numberOfDecorations = Decorate( 17 );
+    Announce( "We got " + numberOfDecorations + " decorations up, discluding what the kids destroyed." );
 }
 
-function Announce( what ) {
+function Announce( what ) { // Function w/ arg and no return.
     console.log( what );
 }
 
-function Decorate( decorations ) {
+function Decorate( decorations ) { // Function with number arg and return number.
     var totalDecorations = 0;
-    while( decorations != 0 ) {
-        decorations --;
-        totalDecorations++;
-        if( decorations % 3 === 1 ) {
-            Announce( "Put up more balloons (" + totalDecorations + ")." );
+    while( decorations > 0 ) {
+        decorations -= 5;
+        totalDecorations += 4;
+        if( decorations % 2 === 0 ) {
+            Announce( "Put up more decorations." );
         }
-        else if( decorations % 3 == 2 ) {
-            Announce( "Put up more streamers (" + totalDecorations + ")." );
-        }
-        else {
-            Announce( "Kid's destroyed something. (" + totalDecorations + ")." );
-            decorations++;
+        else if( decorations % 3 == 1 ) {
+            Announce( "Kids destroyed something." );
+            totalDecorations--;
         };
     };
     return totalDecorations;
 }
 
-function AreWeReadyYet() {
-        console.log( "We're " + (ready? "": "not" ) + " ready to party. " + whoArrived + " is here, but we're waiting for " + ( guestList.length - allGuests.length ) + " more people to arrive." );
-
-}
+ThrowParty();
