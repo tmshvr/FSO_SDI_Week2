@@ -64,20 +64,6 @@ var guestList = [ "Mike, Nevada, Johnny", "Bobbi, Sage, Madi", "Haley", "Patrick
         return tempGuestList;
     },
 
-/* Historical (working) value.
-    guestsArrive = function( numOf, names ) { // Function with number and array arg, and return array.
-        var tempGuestList = [ ];
-        for( var i = 0; i < numOf; i++ ) {
-            var theGuests = names[ i ].split( ", " );
-            for( var j = 0; j < theGuests.length; j++ ) {
-                tempGuestList[ tempGuestList.length ] = theGuests[ j ];
-            };
-            makeAnnouncement( concatenateGuestAnnouncement( names[ i ].split( ", " ), ( " arrived. Waiting for " + ( totalGuests - tempGuestList.length ) + " more people." )));
-        };
-        return tempGuestList;
-    };
-*/
-
     checkReady = function( haveAllGuests, haveAllDecorations ) { // Function with two args, boolean comparison, and a boolean return.
         var checked = false;
         if( haveAllGuests === true && haveAllDecorations === true ) {
