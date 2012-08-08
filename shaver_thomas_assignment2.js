@@ -81,6 +81,7 @@ var guestList = [ "Mike, Nevada, Johnny", "Bobbi, Sage, Madi", "Haley", "Patrick
     throwParty = function () {
         totalGuests = 21;
         makeAnnouncement( "We're throwing a surprise party for Mom." );
+        makeAnnouncement( "Uncle Jim is distracting her while my aunt and I, along with some guests, set up." );
         allGuests = guestsArrive( guestList.length, guestList );
 
         ready = checkReady(( allGuests.length === totalGuests ), ( numberOfDecorations === 15 ));
