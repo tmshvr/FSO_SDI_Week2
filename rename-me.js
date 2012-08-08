@@ -3,7 +3,7 @@
 // Thomas Shaver
 // 08/03/2012
 // Project 2
-// ............... Description ...............
+// Story-telling code.
 
 var guestList = [ "Mike, Nevada, Johnny", "Bobbi, Sage, Madi", "Haley", "Patrick, Colleen",
         "Amanda, Logan, Karli, Elizabeth", "Kelly, Tim", "Matt, Jesse", "Rose, Verna, Joe, Josh"
@@ -51,7 +51,6 @@ var guestList = [ "Mike, Nevada, Johnny", "Bobbi, Sage, Madi", "Haley", "Patrick
         return announcement;
     },
 
-
     guestsArrive = function( numOf, names ) { // Function with number and array arg, and return array.
         var tempGuestList = [ ], theGuests, i, j;
         for( i = 0; i < numOf; i++ ) {
@@ -70,7 +69,7 @@ var guestList = [ "Mike, Nevada, Johnny", "Bobbi, Sage, Madi", "Haley", "Patrick
             makeAnnouncement( "The guests are all here, and the decorations are up." );
             checked = true;
         }
-        else if( haveAllGuests !== true ) {
+        else if( !haveAllGuests ) {
             makeAnnouncement( "We're still waiting for guests." );
         }
         else {
