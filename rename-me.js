@@ -7,70 +7,115 @@
 
 var guestList = [ "Mike, Nevada, Johnny", "Bobbi, Sage, Madi", "Haley", "Patrick, Colleen",
         "Amanda, Logan, Karli, Elizabeth", "Kelly, Tim", "Matt, Jesse", "Rose, Verna, Joe, Josh"
-    ],
-    allKids = "Sage, Madie, Logan, Karli, Elizabeth",
+                ],
     allGuests = [ ],
+    totalGuests = 0,
     numberOfDecorations = 0,
-    ready = false;
+    ready = false,
 
-function ThrowParty() {
-    totalGuests = 21;
-    Announce( "We're throwing a surprise party for Mom." );
-    allGuests = GuestsArrive( guestList.length - 1, guestList );
-    ready = CheckReady(( allGuests.length === totalGuests ), ( numberOfDecorations === 15 ));
-    numberOfDecorations = Decorate( 17 );
-    Announce( "We got " + numberOfDecorations + " decorations up, discluding what the kids destroyed." );
-    Announce( CheckKidsToAdults( allKids, guestList.toString()));
-    if( ready === true ) {
-        Announce( "We're ready, time to call Jim and tell him they can come back; nobody leave." );
-    };
-};
+    makeAnnouncement = function( what ) { // Function with arg and no return.
+        console.log( "Announcement: " + what );
+    },
 
-function Announce( what ) { // Function with arg and no return.
-    console.log( "Announcement: " + what );
-};
-
-function Decorate( decorations ) { // Function with number arg, while loop, and return number.
-    var totalDecorations = 0;
-    while( decorations > 0 ) {
-        decorations -= 5;
-        totalDecorations += 4;
-        if( decorations % 2 === 0 ) {
-            Announce( "Put up more decorations." );
+    decorate = function( decorations ) { // Function with number arg, while loop, and return number.
+        var totalDecorations = 0;
+        while( decorations > 0 ) {
+            decorations -= 5;
+            totalDecorations += 4;
+            if( decorations % 2 === 0 ) {
+                makeAnnouncement( "Put up more decorations." );
+            }
+            else if( decorations % 3 === 1 ) {
+                makeAnnouncement( "Kids destroyed something." );
+                totalDecorations -= 1;
+            }
         }
-        else if( decorations % 3 == 1 ) {
-            Announce( "Kids destroyed something." );
-            totalDecorations--;
+        return totalDecorations;
+    },
+
+    concatenateGuestAnnouncement = function( guests, announcement ) { // Function with two string args and one string output.
+        var i = 0, arrived = "";
+        if( guests.length < 2 ) {
+            announcement = guests + announcement;
+        }
+        else {
+            for( i; i < guests.length - 1; i += 1 ) {
+                if( i > 0 ) {
+                    arrived += " ";
+                }
+                arrived += guests[ i ] + ",";
+            }
+            arrived += ( " and " + guests[ guests.length - 1 ] );
+            announcement = arrived + announcement;
+        }
+        return announcement;
+    },
+
+
+    guestsArrive = function( numOf, names ) { // Function with number and array arg, and return array.
+        var tempGuestList = [ ], theGuests, i, j;
+        for( i = 0; i < numOf; i++ ) {
+            theGuests = names[ i ].split( ", " );
+            for( j = 0; j < theGuests.length; j++ ) {
+                tempGuestList[ tempGuestList.length ] = theGuests[ j ];
+            }
+            makeAnnouncement(concatenateGuestAnnouncement( names[ i ].split( ", " ), ( " arrived. Waiting for " + ( totalGuests - tempGuestList.length ) + " more people." )));
+        }
+        return tempGuestList;
+    },
+
+/* Historical (working) value.
+    guestsArrive = function( numOf, names ) { // Function with number and array arg, and return array.
+        var tempGuestList = [ ];
+        for( var i = 0; i < numOf; i++ ) {
+            var theGuests = names[ i ].split( ", " );
+            for( var j = 0; j < theGuests.length; j++ ) {
+                tempGuestList[ tempGuestList.length ] = theGuests[ j ];
+            };
+            makeAnnouncement( concatenateGuestAnnouncement( names[ i ].split( ", " ), ( " arrived. Waiting for " + ( totalGuests - tempGuestList.length ) + " more people." )));
         };
+        return tempGuestList;
     };
-    return totalDecorations;
-};
+*/
 
-function GuestsArrive( numOf, names ) { // Function with number and array arg, and return array.
-    var tempGuestList = [ ];
-    for( var i = 0; i <= numOf; i++ ) {
-        var theGuests = names[ i ].split( ", " );
-        for( var j = 0; j < theGuests.length; j++ ) {
-            tempGuestList[ tempGuestList.length ] = theGuests[ j ];
-        };
-        Announce( names[ i ] + " arrived. Waiting for " + ( totalGuests - tempGuestList.length ) + " more people." );
+    checkReady = function( haveAllGuests, haveAllDecorations ) { // Function with two args, boolean comparison, and a boolean return.
+        var checked = false;
+        if( haveAllGuests === true && haveAllDecorations === true ) {
+            makeAnnouncement( "The guests are all here, and the decorations are up." );
+            checked = true;
+        }
+        else if( haveAllGuests !== true ) {
+            makeAnnouncement( "We're still waiting for guests." );
+        }
+        else {
+            makeAnnouncement( "We're still putting up decorations." );
+        }
+        return checked;
+    },
+
+    throwParty = function () {
+        totalGuests = 21;
+        makeAnnouncement( "We're throwing a surprise party for Mom." );
+        allGuests = guestsArrive( guestList.length, guestList );
+
+        ready = checkReady(( allGuests.length === totalGuests ), ( numberOfDecorations === 15 ));
+        if( ready ) {
+            makeAnnouncement( "Time to call Jim and tell him to bring Mom back, nobody leave!" );
+        }
+        else {
+            makeAnnouncement( "Not ready quite yet." );
+        }
+
+        numberOfDecorations = decorate( 17 );
+        makeAnnouncement( "We got " + numberOfDecorations + " decorations up, discluding what the kids destroyed." );
+
+        ready = checkReady(( allGuests.length === totalGuests ), ( numberOfDecorations === 15 ));
+        if( ready ) {
+            makeAnnouncement( "Time to call Jim and tell him to bring Mom back, nobody leave!" );
+        }
+        else {
+            makeAnnouncement( "Not ready quite yet. " + allGuests.length + ";" + numberOfDecorations + "."  );
+        }
     };
-    return tempGuestList;
-};
 
-function CheckReady( haveAllGuests, haveAllDecorations ) { // Function with two args, boolean comparison, and a boolean return.
-    if( haveAllGuests === true && haveAllDecorations === true ) {
-        Announce( "The guests are all here, and the decorations are up." );
-        return true;
-    }
-    else if( haveAllGuests !== true ) {
-        Announce( "We're still waiting for guests." );
-        return false;
-    }
-    else {
-        Announce( "We're still putting up decorations." );
-        return false;
-    };
-};
-
-ThrowParty();
+throwParty();
