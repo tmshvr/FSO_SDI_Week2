@@ -13,7 +13,6 @@ var guestList = [ "Mike, Nevada, Johnny", "Bobbi, Sage, Madi", "Haley", "Patrick
     numberOfDecorations = 0,
     ready = false,
     whoArrived = "";
-    
 
 function ThrowParty() {
     totalGuests = 21;
@@ -21,6 +20,7 @@ function ThrowParty() {
     numberOfDecorations = Decorate( 17 );
     Announce( "We got " + numberOfDecorations + " decorations up, discluding what the kids destroyed." );
     allGuests = GuestsArrive( guestList.length - 1, guestList );
+    console.log( allGuests );
 }
 
 function Announce( what ) { // Function w/ arg and no return.
@@ -44,14 +44,15 @@ function Decorate( decorations ) { // Function with number arg and return number
 }
 
 function GuestsArrive( numOf, names ) { // Function with number and array arg, and return array.
+    var tempGuestList = [ ];
     for( var i = 0; i <= numOf; i++ ) {
         var theGuests = names[ i ].split( ", " );
         for( var j = 0; j < theGuests.length; j++ ) {
-            allGuests.push( theGuests[ j ]);
-        }
-        Announce( names[ i ] + " arrived. Waiting for " + ( totalGuests - allGuests.length ) + " more people." );
+            tempGuestList[ tempGuestList.length ] = theGuests[ j ];
+        };
+        Announce( names[ i ] + " arrived. Waiting for " + ( totalGuests - tempGuestList.length ) + " more people." );
     };
-    return theGuests;
+    return tempGuestList;
 }
 
 ThrowParty();
